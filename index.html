@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteBite Burgers & Grill | Glassmorphism Fast Food</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- External Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans selection:bg-orange-500 selection:text-white min-h-screen relative">
+
+    <!-- Glowing Background Shapes -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="glow-blob bg-amber-500/20 w-[450px] h-[450px] top-[-100px] left-[-100px]"></div>
+        <div class="glow-blob bg-rose-600/20 w-[500px] h-[500px] bottom-[-150px] right-[-100px]"></div>
+        <div class="glow-blob bg-purple-600/15 w-[400px] h-[400px] top-[40%] left-[30%]"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 w-full px-4 sm:px-8 py-3">
+        <nav class="max-w-7xl mx-auto glass-panel px-6 py-3 rounded-2xl flex items-center justify-between shadow-2xl backdrop-blur-md">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('customer')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-orange-500/30">
+                    <i class="fa-solid fa-burger"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">ByteBite</span>
+                    <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-slate-400 font-semibold ml-2">Grill & Bar</span>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <div class="flex items-center space-x-3">
+                <button onclick="switchTab('customer')" id="nav-menu-btn" class="px-4 py-2 rounded-xl font-medium text-sm transition-all duration-300 bg-white/10 text-white border border-white/20">
+                    <i class="fa-solid fa-utensils mr-2 text-amber-400"></i> Menu
+                </button>
+                
+                <button onclick="switchTab('admin')" id="nav-admin-btn" class="px-4 py-2 rounded-xl font-medium text-sm transition-all duration-300 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10">
+                    <i class="fa-solid fa-user-shield mr-2 text-purple-400"></i> Admin Panel
+                </button>
+
+                <!-- Cart Button -->
+                <button onclick="toggleCartDrawer(true)" class="relative p-2.5 rounded-xl glass-button text-amber-400 border border-amber-500/30 shadow-lg">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-rose-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md animate-pulse">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Dynamic Container -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-6">
+
+        <!-- ==================== CUSTOMER VIEW ==================== -->
+        <div id="customer-view" class="space-y-12">
+            
+            <!-- Hero Banner -->
+            <section class="glass-panel p-8 sm:p-12 rounded-3xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-white/15">
+                <div class="max-w-xl space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold tracking-wide">
+                        <i class="fa-solid fa-fire text-orange-400"></i> 100% Angus Beef & Fresh Ingredients
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight">
+                        Crave it. <br><span class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">Byte into Perfection.</span>
+                    </h1>
+                    <p class="text-slate-300 text-sm sm:text-base font-normal leading-relaxed">
+                        Handcrafted gourmet burgers, crispy seasoned fries, and thick milkshakes served with blazing fast speed. Order online for instant dispatch!
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#menu-section" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-rose-500 text-white font-bold text-sm shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all">
+                            Explore Menu <i class="fa-solid fa-arrow-down ml-2"></i>
+                        </a>
+                        <button onclick="scrollToOrderTracker()" class="px-6 py-3.5 rounded-2xl glass-button text-slate-200 font-semibold text-sm border border-white/15 hover:bg-white/10">
+                            Track Active Order <i class="fa-solid fa-location-dot ml-2 text-rose-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-rose-500 rounded-3xl blur-2xl opacity-40 group-hover:opacity-70 transition duration-1000"></div>
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Special Burger" class="relative rounded-3xl object-cover w-full max-w-sm h-72 sm:h-80 shadow-2xl border border-white/20 transform group-hover:scale-[1.02] transition-all duration-300">
+                </div>
+            </section>
+
+            <!-- Menu Controls & Filter Section -->
+            <section id="menu-section" class="space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Our Delicious Menu</h2>
+                        <p class="text-slate-400 text-xs sm:text-sm">Select a category or search your favorite meal</p>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="relative w-full md:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="menu-search" oninput="renderMenu()" placeholder="Search food, drinks..." class="w-full glass-input pl-11 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="category-pills">
+                    <!-- Dynamic rendering -->
+                </div>
+
+                <!-- Menu Item Cards Grid -->
+                <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Dynamic cards inserted here -->
+                </div>
+            </section>
+
+            <!-- Order Tracking Section -->
+            <section id="tracking-section" class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/15 space-y-6">
+                <div class="flex items-center justify-between flex-wrap gap-4 border-b border-white/10 pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> Live Order Tracker
+                        </h3>
+                        <p class="text-slate-400 text-xs">Real-time status updates from our kitchen</p>
+                    </div>
+                    <div id="active-order-id-badge" class="px-3 py-1 rounded-full bg-white/10 text-slate-300 text-xs font-mono">
+                        No active order
+                    </div>
+                </div>
+
+                <div id="tracker-content" class="text-center py-8 text-slate-400">
+                    <i class="fa-solid fa-burger text-4xl text-slate-600 mb-3 block"></i>
+                    <p class="text-sm">You have no active orders yet. Add items to your cart and checkout!</p>
+                </div>
+            </section>
+
+            <!-- Customer Reviews Section -->
+            <section class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">What Foodies Say</h3>
+                        <p class="text-slate-400 text-xs">Real reviews from satisfied customers</p>
+                    </div>
+                    <button onclick="openReviewModal()" class="px-4 py-2 rounded-xl glass-button text-xs font-semibold text-amber-300 border border-amber-500/30">
+                        <i class="fa-solid fa-pen-to-square mr-1"></i> Write Review
+                    </button>
+                </div>
+
+                <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Dynamic reviews -->
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ==================== ADMIN VIEW ==================== -->
+        <div id="admin-view" class="hidden space-y-8">
+            
+            <!-- Admin Top Bar & Auth Info -->
+            <div class="glass-panel p-6 rounded-3xl border border-purple-500/20 flex flex-col md:flex-row items-md-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                        Admin Control Dashboard
+                    </h1>
+                    <p class="text-slate-400 text-xs mt-1">Manage orders, update live menu items, and view real-time sales stats.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="openAddModal()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs shadow-lg shadow-purple-600/30 transition">
+                        <i class="fa-solid fa-plus mr-1.5"></i> Add New Item
+                    </button>
+                    <button onclick="switchTab('customer')" class="px-4 py-2.5 rounded-xl glass-button text-xs font-semibold text-slate-300">
+                        Exit Admin
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytics Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="glass-panel p-5 rounded-2xl border border-white/10 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-400 text-xs font-medium">Total Revenue</p>
+                        <h4 id="admin-total-revenue" class="text-2xl font-bold text-white">$0.00</h4>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-white/10 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-400 text-xs font-medium">Total Orders</p>
+                        <h4 id="admin-total-orders" class="text-2xl font-bold text-white">0</h4>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-white/10 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-400 text-xs font-medium">Active Menu Items</p>
+                        <h4 id="admin-active-items" class="text-2xl font-bold text-white">0</h4>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-white/10 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-400 text-xs font-medium">Average Ticket</p>
+                        <h4 id="admin-avg-ticket" class="text-2xl font-bold text-white">$0.00</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Management Table -->
+            <div class="glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-white">Customer Orders Queue</h3>
+                    <span class="text-xs text-slate-400">Updates live</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-white/5 uppercase text-slate-400 font-semibold border-b border-white/10">
+                            <tr>
+                                <th class="py-3 px-4">Order ID</th>
+                                <th class="py-3 px-4">Customer</th>
+                                <th class="py-3 px-4">Items Summary</th>
+                                <th class="py-3 px-4">Total</th>
+                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-orders-table-body" class="divide-y divide-white/5">
+                            <!-- Dynamic Table Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Admin Menu Item Inventory Management -->
+            <div class="glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-white">Menu Item Inventory</h3>
+                    <button onclick="openAddModal()" class="text-xs text-purple-400 hover:text-purple-300 font-semibold">
+                        + Add Custom Item
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-white/5 uppercase text-slate-400 font-semibold border-b border-white/10">
+                            <tr>
+                                <th class="py-3 px-4">Item</th>
+                                <th class="py-3 px-4">Category</th>
+                                <th class="py-3 px-4">Price</th>
+                                <th class="py-3 px-4">Stock Status</th>
+                                <th class="py-3 px-4 text-right">Management</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-menu-table-body" class="divide-y divide-white/5">
+                            <!-- Dynamic Menu Management Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Slide-Over Shopping Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden pointer-events-none transition-all duration-300">
+        <div id="cart-backdrop" onclick="toggleCartDrawer(false)" class="absolute inset-0 bg-slate-950/70 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-auto"></div>
+
+        <aside class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div id="cart-panel" class="w-screen max-w-md glass-panel rounded-l-3xl p-6 shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 pointer-events-auto border-l border-white/20">
+                
+                <!-- Drawer Header -->
+                <div>
+                    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-bag-shopping text-amber-400"></i> Your Order
+                        </h3>
+                        <button onclick="toggleCartDrawer(false)" class="text-slate-400 hover:text-white text-lg">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <!-- Cart List -->
+                    <div id="cart-items-container" class="mt-4 max-h-[45vh] overflow-y-auto space-y-3 pr-1">
+                        <!-- Dynamic Cart Rows -->
+                    </div>
+                </div>
+
+                <!-- Footer / Totals & Checkout -->
+                <div class="border-t border-white/10 pt-4 space-y-3">
+                    
+                    <!-- Promo Code Input -->
+                    <div class="flex gap-2">
+                        <input type="text" id="promo-input" placeholder="Promo (BYTE10)" class="w-full glass-input px-3 py-2 rounded-xl text-xs text-white uppercase placeholder-slate-500 focus:outline-none">
+                        <button onclick="applyPromoCode()" class="px-3 py-2 rounded-xl glass-button text-xs font-semibold text-amber-300 border border-amber-500/30">Apply</button>
+                    </div>
+                    <p id="promo-message" class="text-[10px] hidden"></p>
+
+                    <!-- Summary breakdown -->
+                    <div class="space-y-1.5 text-xs text-slate-300">
+                        <div class="flex justify-between">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal">$0.00</span>
+                        </div>
+                        <div id="discount-row" class="flex justify-between text-emerald-400 hidden">
+                            <span>Discount</span>
+                            <span id="cart-discount">-$0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Tax (8%)</span>
+                            <span id="cart-tax">$0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Delivery Fee</span>
+                            <span id="cart-delivery">$2.99</span>
+                        </div>
+                        <div class="flex justify-between text-base font-bold text-white border-t border-white/10 pt-2">
+                            <span>Grand Total</span>
+                            <span id="cart-total" class="text-amber-400">$0.00</span>
+                        </div>
+                    </div>
+
+                    <button onclick="openCheckoutModal()" id="checkout-btn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-white font-bold text-sm shadow-lg shadow-orange-500/30 transition-all">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modal: Add / Edit Menu Item (Admin) -->
+    <div id="add-item-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+        <div class="glass-panel w-full max-w-md p-6 rounded-3xl border border-white/20 space-y-4">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <h3 class="text-base font-bold text-white">Add New Menu Item</h3>
+                <button onclick="closeAddModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="add-item-form" onsubmit="handleSaveMenuItem(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Item Title</label>
+                    <input type="text" id="item-title" required placeholder="e.g. Double Truffle Burger" class="w-full glass-input px-3 py-2.5 rounded-xl text-white">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-400 mb-1">Category</label>
+                        <select id="item-category" class="w-full glass-input px-3 py-2.5 rounded-xl text-white bg-slate-900">
+                            <option value="burgers">Burgers</option>
+                            <option value="pizzas">Pizzas</option>
+                            <option value="sides">Sides</option>
+                            <option value="drinks">Drinks</option>
+                            <option value="desserts">Desserts</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Price ($)</label>
+                        <input type="number" step="0.01" id="item-price" required placeholder="12.99" class="w-full glass-input px-3 py-2.5 rounded-xl text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-slate-400 mb-1">Description</label>
+                    <textarea id="item-desc" rows="2" required placeholder="Short mouth-watering description..." class="w-full glass-input px-3 py-2.5 rounded-xl text-white"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-slate-400 mb-1">Image URL</label>
+                    <input type="url" id="item-img" required placeholder="https://images.unsplash.com/..." class="w-full glass-input px-3 py-2.5 rounded-xl text-white">
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" onclick="closeAddModal()" class="w-1/2 py-2.5 rounded-xl glass-button text-slate-300 font-semibold">Cancel</button>
+                    <button type="submit" class="w-1/2 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold shadow-lg shadow-purple-600/30">Save Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Checkout Form -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+        <div class="glass-panel w-full max-w-md p-6 rounded-3xl border border-white/20 space-y-4">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-truck-fast text-amber-400"></i> Complete Delivery Order
+                </h3>
+                <button onclick="closeCheckoutModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="checkout-form" onsubmit="handlePlaceOrder(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Full Name</label>
+                    <input type="text" id="cust-name" required placeholder="Alex Mercer" class="w-full glass-input px-3 py-2.5 rounded-xl text-white">
+                </div>
+
+                <div>
+                    <label class="block text-slate-400 mb-1">Phone Number</label>
+                    <input type="tel" id="cust-phone" required placeholder="+1 (555) 019-2834" class="w-full glass-input px-3 py-2.5 rounded-xl text-white">
+                </div>
+
+                <div>
+                    <label class="block text-slate-400 mb-1">Delivery Address</label>
+                    <textarea id="cust-address" rows="2" required placeholder="123 Cyberpunk Ave, Suite 4B..." class="w-full glass-input px-3 py-2.5 rounded-xl text-white"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-slate-400 mb-1">Payment Method</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 p-2 rounded-xl glass-input cursor-pointer">
+                            <input type="radio" name="payment" value="card" checked class="accent-amber-500">
+                            <span>Credit Card</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2 rounded-xl glass-input cursor-pointer">
+                            <input type="radio" name="payment" value="cash" class="accent-amber-500">
+                            <span>Cash on Delivery</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" onclick="closeCheckoutModal()" class="w-1/2 py-2.5 rounded-xl glass-button text-slate-300 font-semibold">Cancel</button>
+                    <button type="submit" class="w-1/2 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 text-white font-bold shadow-lg shadow-orange-500/30">Confirm Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Write Review -->
+    <div id="review-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+        <div class="glass-panel w-full max-w-md p-6 rounded-3xl border border-white/20 space-y-4">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <h3 class="text-base font-bold text-white">Leave Feedback</h3>
+                <button onclick="closeReviewModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="review-form" onsubmit="handleSaveReview(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Your Name</label>
+                    <input type="text" id="rev-name" required placeholder="Sarah L." class="w-full glass-input px-3 py-2.5 rounded-xl text-white">
+                </div>
+
+                <div>
+                    <label class="block text-slate-400 mb-1">Rating</label>
+                    <select id="rev-rating" class="w-full glass-input px-3 py-2.5 rounded-xl text-white bg-slate-900">
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5 Exceptional)</option>
+                        <option value="4">⭐⭐⭐⭐ (4/5 Great)</option>
+                        <option value="3">⭐⭐⭐ (3/5 Average)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-400 mb-1">Comment</label>
+                    <textarea id="rev-comment" rows="3" required placeholder="The burgers were ultra juicy!..." class="w-full glass-input px-3 py-2.5 rounded-xl text-white"></textarea>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" onclick="closeReviewModal()" class="w-1/2 py-2.5 rounded-xl glass-button text-slate-300 font-semibold">Cancel</button>
+                    <button type="submit" class="w-1/2 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-lg shadow-amber-500/30">Post Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast Box -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="glass-panel px-4 py-3 rounded-2xl border border-white/20 text-xs font-semibold text-white shadow-2xl flex items-center gap-3 bg-slate-900/90">
+            <span id="toast-icon" class="text-amber-400 text-base"><i class="fa-solid fa-circle-check"></i></span>
+            <span id="toast-text">Notification message</span>
+        </div>
+    </div>
+
+    <!-- External Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
