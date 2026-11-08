@@ -1,12 +1,12 @@
 /* ==================== INITIAL DATA & STATE MANAGEMENT ==================== */
 const DEFAULT_MENU = [
-    { id: '1', title: 'Monster Angus Burger', category: 'burgers', price: 12.99, desc: 'Double 100% Angus patty, melted cheddar, crispy bacon, secret sauce.', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80', available: true },
-    { id: '2', title: 'Smoky BBQ Bacon Melt', category: 'burgers', price: 11.49, desc: 'Smoked Gouda cheese, crispy onion rings, sticky hickory sauce.', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80', available: true },
-    { id: '3', title: 'Spicy Volcano Zinger', category: 'burgers', price: 9.99, desc: 'Crispy fried chicken breast, jalapenos, spicy sriracha mayo.', img: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=80', available: true },
-    { id: '4', title: 'Loaded Pepperoni Feast', category: 'pizzas', price: 15.99, desc: 'Double layer pepperoni, mozzarella blend, garlic herb crust.', img: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=80', available: true },
-    { id: '5', title: 'Truffle Parmesan Fries', category: 'sides', price: 5.49, desc: 'Hand-cut potato fries tossed in truffle oil and shaved parmesan.', img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=500&q=80', available: true },
-    { id: '6', title: 'Salted Caramel Shake', category: 'drinks', price: 4.99, desc: 'Hand-spun vanilla gelato, sea salt caramel drizzle, whipped cream.', img: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', available: true },
-    { id: '7', title: 'Choco Fudge Lava Cake', category: 'desserts', price: 6.49, desc: 'Warm gooey chocolate center served with a scoop of gelato.', img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80', available: true }
+    { id: '1', title: 'Monster Angus Burger', category: 'burgers', price: 1999, desc: 'Double 100% Angus patty, melted cheddar, crispy bacon, secret sauce.', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80', available: true },
+    { id: '2', title: 'Smoky BBQ Bacon Melt', category: 'burgers', price: 1799, desc: 'Smoked Gouda cheese, crispy onion rings, sticky hickory sauce.', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80', available: true },
+    { id: '3', title: 'Spicy Volcano Zinger', category: 'burgers', price: 1499, desc: 'Crispy fried chicken breast, jalapenos, spicy sriracha mayo.', img: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=80', available: true },
+    { id: '4', title: 'Loaded Pepperoni Feast', category: 'pizzas', price: 2499, desc: 'Double layer pepperoni, mozzarella blend, garlic herb crust.', img: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=80', available: true },
+    { id: '5', title: 'Truffle Parmesan Fries', category: 'sides', price: 899, desc: 'Hand-cut potato fries tossed in truffle oil and shaved parmesan.', img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=500&q=80', available: true },
+    { id: '6', title: 'Salted Caramel Shake', category: 'drinks', price: 799, desc: 'Hand-spun vanilla gelato, sea salt caramel drizzle, whipped cream.', img: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', available: true },
+    { id: '7', title: 'Choco Fudge Lava Cake', category: 'desserts', price: 999, desc: 'Warm gooey chocolate center served with a scoop of gelato.', img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80', available: true }
 ];
 
 const DEFAULT_REVIEWS = [
@@ -115,7 +115,7 @@ function renderMenu() {
                 <div class="relative h-44 rounded-2xl overflow-hidden">
                     <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute top-3 right-3 bg-slate-950/70 backdrop-blur-md text-amber-400 font-extrabold px-3 py-1 rounded-xl text-xs border border-white/10">
-                        $${item.price.toFixed(2)}
+                        Rs.${item.price.toFixed(2)}
                     </div>
                     ${!item.available ? '<div class="absolute inset-0 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center text-rose-400 font-bold text-xs uppercase tracking-wider">Sold Out</div>' : ''}
                 </div>
@@ -216,7 +216,7 @@ function updateCartUI() {
                 <img src="${item.img}" class="w-12 h-12 rounded-xl object-cover">
                 <div class="flex-1 min-w-0">
                     <h4 class="text-xs font-bold text-white truncate">${item.title}</h4>
-                    <p class="text-[11px] text-amber-400 font-semibold">$${(item.price * item.qty).toFixed(2)}</p>
+                    <p class="text-[11px] text-amber-400 font-semibold">Rs.${(item.price * item.qty).toFixed(2)}</p>
                 </div>
                 <div class="flex items-center gap-2 bg-slate-900/60 rounded-xl p-1 border border-white/10">
                     <button onclick="updateCartQty('${item.id}', -1)" class="w-6 h-6 rounded-lg glass-button flex items-center justify-center text-xs text-slate-300">-</button>
@@ -231,18 +231,18 @@ function updateCartUI() {
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
     const discountAmount = subtotal * promoDiscount;
     const tax = (subtotal - discountAmount) * 0.08;
-    const delivery = subtotal > 0 ? 2.99 : 0;
+    const delivery = subtotal > 0 ? 299 : 0;
     const grandTotal = subtotal - discountAmount + tax + delivery;
 
-    document.getElementById('cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
-    document.getElementById('cart-tax').innerText = `$${tax.toFixed(2)}`;
-    document.getElementById('cart-delivery').innerText = `$${delivery.toFixed(2)}`;
-    document.getElementById('cart-total').innerText = `$${grandTotal.toFixed(2)}`;
+    document.getElementById('cart-subtotal').innerText = `Rs.${subtotal.toFixed(2)}`;
+    document.getElementById('cart-tax').innerText = `Rs.${tax.toFixed(2)}`;
+    document.getElementById('cart-delivery').innerText = `Rs.${delivery.toFixed(2)}`;
+    document.getElementById('cart-total').innerText = `Rs.${grandTotal.toFixed(2)}`;
 
     const discountRow = document.getElementById('discount-row');
     if (promoDiscount > 0 && subtotal > 0) {
         discountRow.classList.remove('hidden');
-        document.getElementById('cart-discount').innerText = `-$${discountAmount.toFixed(2)}`;
+        document.getElementById('cart-discount').innerText = `-Rs.${discountAmount.toFixed(2)}`;
     } else {
         discountRow.classList.add('hidden');
     }
@@ -426,7 +426,7 @@ function handleSaveReview(e) {
 function renderAdminDashboard() {
     // Total Revenue
     const totalRev = orders.reduce((sum, o) => sum + o.total, 0);
-    document.getElementById('admin-total-revenue').innerText = `$${totalRev.toFixed(2)}`;
+    document.getElementById('admin-total-revenue').innerText = `Rs.${totalRev.toFixed(2)}`;
 
     // Total Orders
     document.getElementById('admin-total-orders').innerText = orders.length;
@@ -436,7 +436,7 @@ function renderAdminDashboard() {
 
     // Avg Ticket
     const avg = orders.length > 0 ? totalRev / orders.length : 0;
-    document.getElementById('admin-avg-ticket').innerText = `$${avg.toFixed(2)}`;
+    document.getElementById('admin-avg-ticket').innerText = `Rs.${avg.toFixed(2)}`;
 
     renderAdminTables();
 }
@@ -457,7 +457,7 @@ function renderAdminTables() {
                 <td class="py-3 px-4 max-w-xs truncate text-slate-300">
                     ${ord.items.map(i => `${i.qty}x ${i.title}`).join(', ')}
                 </td>
-                <td class="py-3 px-4 font-bold text-white">$${ord.total.toFixed(2)}</td>
+                <td class="py-3 px-4 font-bold text-white">Rs.${ord.total.toFixed(2)}</td>
                 <td class="py-3 px-4">
                     <select onchange="updateOrderStatus('${ord.id}', this.value)" 
                         class="bg-slate-900 border border-white/20 rounded-lg text-xs text-amber-400 px-2 py-1 focus:outline-none">
@@ -485,7 +485,7 @@ function renderAdminTables() {
                 <span class="font-bold text-white">${item.title}</span>
             </td>
             <td class="py-3 px-4 uppercase text-[10px] font-bold text-slate-400">${item.category}</td>
-            <td class="py-3 px-4 font-bold text-amber-400">$${item.price.toFixed(2)}</td>
+            <td class="py-3 px-4 font-bold text-amber-400">Rs.${item.price.toFixed(2)}</td>
             <td class="py-3 px-4">
                 <button onclick="toggleStock('${item.id}')" 
                     class="px-2.5 py-1 rounded-full text-[10px] font-bold ${
