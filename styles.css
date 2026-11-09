@@ -55,6 +55,19 @@ body {
     }
 }
 
+/* Image Source Tabs */
+.img-source-tab {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--slate-400, #94a3b8);
+}
+
+.img-source-tab.active {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.5);
+    color: #c084fc;
+}
+
 /* Scrollbar Hide Utility */
 .scrollbar-none::-webkit-scrollbar {
     display: none;

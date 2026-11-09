@@ -563,12 +563,70 @@ function deleteMenuItem(itemId) {
 }
 
 /* ==================== ADD MENU ITEM MODAL ==================== */
+let currentImgSource = 'upload'; // 'upload' or 'url'
+let uploadedImageData = null;
+
 function openAddModal() {
     document.getElementById('add-item-modal').classList.remove('hidden');
+    switchImgSource('upload');
 }
 
 function closeAddModal() {
     document.getElementById('add-item-modal').classList.add('hidden');
+    resetImageUpload();
+}
+
+function switchImgSource(source) {
+    currentImgSource = source;
+    const uploadTab = document.getElementById('img-upload-tab');
+    const urlTab = document.getElementById('img-url-tab');
+    const uploadArea = document.getElementById('img-upload-area');
+    const urlArea = document.getElementById('img-url-area');
+
+    if (source === 'upload') {
+        uploadTab.classList.add('active');
+        urlTab.classList.remove('active');
+        uploadArea.classList.remove('hidden');
+        urlArea.classList.add('hidden');
+    } else {
+        urlTab.classList.add('active');
+        uploadTab.classList.remove('active');
+        urlArea.classList.remove('hidden');
+        uploadArea.classList.add('hidden');
+    }
+}
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        uploadedImageData = e.target.result;
+        const preview = document.getElementById('img-preview');
+        preview.src = uploadedImageData;
+        document.getElementById('img-preview-container').classList.remove('hidden');
+        document.getElementById('img-upload-label').classList.add('hidden');
+        document.getElementById('img-upload-text').textContent = file.name;
+    };
+    reader.readAsDataURL(file);
+}
+
+function removeImageUpload() {
+    uploadedImageData = null;
+    document.getElementById('img-file-input').value = '';
+    document.getElementById('img-preview-container').classList.add('hidden');
+    document.getElementById('img-upload-label').classList.remove('hidden');
+    document.getElementById('img-upload-text').textContent = 'Click to upload image';
+}
+
+function resetImageUpload() {
+    uploadedImageData = null;
+    document.getElementById('img-file-input').value = '';
+    document.getElementById('img-preview-container').classList.add('hidden');
+    document.getElementById('img-upload-label').classList.remove('hidden');
+    document.getElementById('img-upload-text').textContent = 'Click to upload image';
+    document.getElementById('item-img').value = '';
 }
 
 function handleSaveMenuItem(e) {
@@ -577,7 +635,18 @@ function handleSaveMenuItem(e) {
     const category = document.getElementById('item-category').value;
     const price = parseFloat(document.getElementById('item-price').value);
     const desc = document.getElementById('item-desc').value;
-    const img = document.getElementById('item-img').value;
+
+    let img = '';
+    if (currentImgSource === 'upload' && uploadedImageData) {
+        img = uploadedImageData;
+    } else {
+        img = document.getElementById('item-img').value;
+    }
+
+    if (!img) {
+        showToast('Please provide an image (upload or URL)');
+        return;
+    }
 
     const newItem = {
         id: Date.now().toString(),

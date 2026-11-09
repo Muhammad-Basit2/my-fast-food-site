@@ -378,8 +378,32 @@
                 </div>
 
                 <div>
-                    <label class="block text-slate-400 mb-1">Image URL</label>
-                    <input type="url" id="item-img" required placeholder="https://images.unsplash.com/..." class="w-full glass-input px-3 py-2.5 rounded-xl text-white">
+                    <label class="block text-slate-400 mb-1">Item Image</label>
+                    <!-- Toggle tabs -->
+                    <div class="flex gap-2 mb-2">
+                        <button type="button" id="img-upload-tab" onclick="switchImgSource('upload')" class="img-source-tab active px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all">
+                            <i class="fa-solid fa-upload mr-1"></i>Upload File
+                        </button>
+                        <button type="button" id="img-url-tab" onclick="switchImgSource('url')" class="img-source-tab px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all">
+                            <i class="fa-solid fa-link mr-1"></i>Image URL
+                        </button>
+                    </div>
+                    <!-- Upload area -->
+                    <div id="img-upload-area" class="space-y-2">
+                        <div id="img-preview-container" class="hidden relative w-full h-32 rounded-xl border-2 border-dashed border-white/20 flex items-center justify-center overflow-hidden bg-black/20">
+                            <img id="img-preview" class="w-full h-full object-cover" alt="Preview">
+                            <button type="button" onclick="removeImageUpload()" class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-rose-500/80 hover:bg-rose-500 text-white text-xs flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <label for="img-file-input" id="img-upload-label" class="flex items-center justify-center gap-2 w-full h-20 rounded-xl glass-input cursor-pointer text-slate-400 text-xs transition hover:border-amber-500/50 hover:text-amber-400">
+                            <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
+                            <span id="img-upload-text">Click to upload image</span>
+                        </label>
+                        <input type="file" id="img-file-input" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                    </div>
+                    <!-- URL input -->
+                    <div id="img-url-area" class="hidden">
+                        <input type="url" id="item-img" placeholder="https://images.unsplash.com/..." class="w-full glass-input px-3 py-2.5 rounded-xl text-white">
+                    </div>
                 </div>
 
                 <div class="pt-2 flex gap-3">
