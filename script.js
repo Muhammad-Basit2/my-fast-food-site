@@ -1,3 +1,6 @@
+// Admin panel password — change this to your desired password
+const ADMIN_PASSWORD = 'bytebite2025';
+
 /* ==================== INITIAL DATA & STATE MANAGEMENT ==================== */
 const DEFAULT_MENU = [
     { id: '1', title: 'Monster Angus Burger', category: 'burgers', price: 1999, desc: 'Double 100% Angus patty, melted cheddar, crispy bacon, secret sauce.', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80', available: true },
@@ -32,7 +35,26 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTracker();
     renderReviews();
     renderAdminTables();
+
+    // Secret URL route: ?admin=true triggers password-protected admin access
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('admin') === 'true' && sessionStorage.getItem('bytebite_admin_auth') !== 'granted') {
+        const pwd = prompt('🔒 Admin Access Required\nEnter the admin password:');
+        if (pwd === ADMIN_PASSWORD) {
+            sessionStorage.setItem('bytebite_admin_auth', 'granted');
+            activateAdminView();
+        } else if (pwd !== null) {
+            alert('Incorrect password. Admin panel is hidden.');
+        }
+    } else if (sessionStorage.getItem('bytebite_admin_auth') === 'granted') {
+        activateAdminView();
+    }
 });
+
+function activateAdminView() {
+    document.getElementById('nav-admin-btn').classList.remove('hidden');
+    switchTab('admin');
+}
 
 /* ==================== NAVIGATION SWITCHER ==================== */
 function switchTab(tab) {
