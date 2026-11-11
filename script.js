@@ -22,6 +22,11 @@ let menu = JSON.parse(localStorage.getItem('bytebite_menu')) || DEFAULT_MENU;
 let cart = JSON.parse(localStorage.getItem('bytebite_cart')) || [];
 let orders = JSON.parse(localStorage.getItem('bytebite_orders')) || [];
 let reviews = JSON.parse(localStorage.getItem('bytebite_reviews')) || DEFAULT_REVIEWS;
+let pricingSettings = {
+    taxRate: 8,
+    deliveryFee: 299,
+    ...JSON.parse(localStorage.getItem('bytebite_pricing_settings') || '{}')
+};
 
 let activeCategory = 'all';
 let promoDiscount = 0;
@@ -31,6 +36,7 @@ let currentTab = 'customer';
 document.addEventListener('DOMContentLoaded', () => {
     renderCategoryPills();
     renderMenu();
+    renderPricingSettings();
     updateCartUI();
     renderTracker();
     renderReviews();
@@ -251,20 +257,17 @@ function updateCartUI() {
 
     // Calculate totals
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-    const discountAmount = subtotal * promoDiscount;
-    const tax = (subtotal - discountAmount) * 0.08;
-    const delivery = subtotal > 0 ? 299 : 0;
-    const grandTotal = subtotal - discountAmount + tax + delivery;
+    const totals = calculateOrderTotals(subtotal, promoDiscount);
 
     document.getElementById('cart-subtotal').innerText = `Rs.${subtotal.toFixed(2)}`;
-    document.getElementById('cart-tax').innerText = `Rs.${tax.toFixed(2)}`;
-    document.getElementById('cart-delivery').innerText = `Rs.${delivery.toFixed(2)}`;
-    document.getElementById('cart-total').innerText = `Rs.${grandTotal.toFixed(2)}`;
+    document.getElementById('cart-tax').innerText = `Rs.${totals.tax.toFixed(2)}`;
+    document.getElementById('cart-delivery').innerText = `Rs.${totals.delivery.toFixed(2)}`;
+    document.getElementById('cart-total').innerText = `Rs.${totals.grandTotal.toFixed(2)}`;
 
     const discountRow = document.getElementById('discount-row');
     if (promoDiscount > 0 && subtotal > 0) {
         discountRow.classList.remove('hidden');
-        document.getElementById('cart-discount').innerText = `-Rs.${discountAmount.toFixed(2)}`;
+        document.getElementById('cart-discount').innerText = `-Rs.${totals.discountAmount.toFixed(2)}`;
     } else {
         discountRow.classList.add('hidden');
     }
@@ -311,7 +314,7 @@ function handlePlaceOrder(e) {
     const payment = document.querySelector('input[name="payment"]:checked').value;
 
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-    const grandTotal = (subtotal * (1 - promoDiscount)) * 1.08 + (subtotal > 0 ? 2.99 : 0);
+    const { grandTotal } = calculateOrderTotals(subtotal, promoDiscount);
 
     const newOrder = {
         id: 'ORD-' + Math.floor(1000 + Math.random() * 9000),
@@ -460,7 +463,46 @@ function renderAdminDashboard() {
     const avg = orders.length > 0 ? totalRev / orders.length : 0;
     document.getElementById('admin-avg-ticket').innerText = `Rs.${avg.toFixed(2)}`;
 
+    renderPricingSettings();
     renderAdminTables();
+}
+
+function calculateOrderTotals(subtotal, discountRate) {
+    const discountAmount = subtotal * discountRate;
+    const discountedSubtotal = subtotal - discountAmount;
+    const tax = discountedSubtotal * (pricingSettings.taxRate / 100);
+    const delivery = subtotal > 0 ? pricingSettings.deliveryFee : 0;
+
+    return {
+        discountAmount,
+        tax,
+        delivery,
+        grandTotal: discountedSubtotal + tax + delivery
+    };
+}
+
+function renderPricingSettings() {
+    document.getElementById('tax-rate-input').value = pricingSettings.taxRate;
+    document.getElementById('delivery-fee-input').value = pricingSettings.deliveryFee;
+    document.getElementById('cart-tax-label').innerText = `Tax (${pricingSettings.taxRate}%)`;
+}
+
+function savePricingSettings(event) {
+    event.preventDefault();
+    const taxRate = Number(document.getElementById('tax-rate-input').value);
+    const deliveryFee = Number(document.getElementById('delivery-fee-input').value);
+
+    if (!Number.isFinite(taxRate) || taxRate < 0 || taxRate > 100 ||
+        !Number.isFinite(deliveryFee) || deliveryFee < 0) {
+        showToast('Enter a tax rate from 0 to 100 and a non-negative delivery fee.');
+        return;
+    }
+
+    pricingSettings = { taxRate, deliveryFee };
+    localStorage.setItem('bytebite_pricing_settings', JSON.stringify(pricingSettings));
+    renderPricingSettings();
+    updateCartUI();
+    showToast('Tax and delivery pricing saved.');
 }
 
 function renderAdminTables() {

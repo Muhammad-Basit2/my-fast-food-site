@@ -218,6 +218,27 @@
                 </div>
             </div>
 
+            <!-- Tax and Delivery Settings -->
+            <div class="glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
+                <div>
+                    <h3 class="text-lg font-bold text-white">Tax &amp; Delivery</h3>
+                    <p class="text-xs text-slate-400 mt-1">Update the rates used for cart totals and new orders.</p>
+                </div>
+                <form id="pricing-settings-form" onsubmit="savePricingSettings(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+                    <div>
+                        <label for="tax-rate-input" class="block text-xs text-slate-400 mb-1">Tax rate (%)</label>
+                        <input type="number" id="tax-rate-input" min="0" max="100" step="0.01" required class="w-full glass-input px-3 py-2.5 rounded-xl text-sm text-white">
+                    </div>
+                    <div>
+                        <label for="delivery-fee-input" class="block text-xs text-slate-400 mb-1">Delivery fee (Rs.)</label>
+                        <input type="number" id="delivery-fee-input" min="0" step="0.01" required class="w-full glass-input px-3 py-2.5 rounded-xl text-sm text-white">
+                    </div>
+                    <button type="submit" class="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition">
+                        Save Pricing
+                    </button>
+                </form>
+            </div>
+
             <!-- Orders Management Table -->
             <div class="glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
                 <div class="flex items-center justify-between">
@@ -320,7 +341,7 @@
                             <span id="cart-discount">-Rs. 0.00</span>
                         </div>
                         <div class="flex justify-between">
-                            <span>Tax (8%)</span>
+                            <span id="cart-tax-label">Tax (8%)</span>
                             <span id="cart-tax">Rs. 0.00</span>
                         </div>
                         <div class="flex justify-between">
